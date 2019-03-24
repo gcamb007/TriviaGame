@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>MCU Trivia</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	 crossorigin="anonymous">
+	<link href="./assets/css/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+	<div class="container-fluid text-uppercase">
+
+		<div class="jumbotron jumbotron-fluid p-4">
+			<div class="container text-center">
+				<h1 class="tagline">TEST YOUR <img src="./assets/images/marvel.png" height="80px"> KNOWLEDGE</h1>
+			</div>
+		</div>
+
+		<div class="row mx-auto mt-5">
+			<div class="col-sm-3"></div>
+			<div class="col-sm-6 text-center">
+
+				<!-- question div -->
+				<div class="text-nowrap" id="questionDiv"></div>
+
+				<!-- answer div -->
+				<div class="text-nowrap" id="answerDiv"></div>
+				<br><br>
+
+				<!-- start button div-->
+				<button class="btn btn-block mt-1 btn-outline-light text-uppercase" id="start">Avengers Assemble! Start.</button>
+				<!-- <br> -->
+
+				<!-- playAgain button div -->
+				<button class="btn btn-block mt-1 btn-outline-light text-uppercase" id="reset">Play Again?</button>
+				<br><br>
+
+				<!-- timer div -->
+				<div id="timelapse"></div>
+
+				<!-- audio div -->
+				<audio autoplay loop id="playAudio">
+					<source src="./assets/music/The-Avengers-Theme-Song.mp3" type="audio/mpeg">
+					<small>Your browser does not support the audio element.</small>
+				</audio>
+				<iframe src="./assets/music/The-Avengers-Theme-Song.mp3" allow="autoplay" style="display:none" id="iframeAudio">
+					<small>Your browser does not support the audio element.</small>
+				</iframe>
+
+			</div>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+	 crossorigin="anonymous"></script>
+	<script type="text/javascript" src="./assets/javascript/app.js"></script>
+
+</body>
+
+</html>

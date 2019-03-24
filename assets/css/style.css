@@ -1,0 +1,58 @@
+@font-face {
+	font-family: marvelFont;
+	src: url(../fonts/Marvel-Regular.ttf);
+}
+
+body {
+	background-image: url(../images/01.jpg);
+	color: black;
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	color: white;
+}
+
+.container-fluid {
+	padding: 0 !important;
+}
+
+.jumbotron {
+	background: rgba(0, 0, 0, 0.3);
+	margin: 0 !important;
+}
+
+.tagline {
+	font-family: 'marvelFont', 'Open Sans', 'Helvetica Neue', sans-serif;
+	font-size: 4.5rem;
+	color: white;
+}
+
+.btn {
+	height: 70px;
+	font-family: 'marvelFont', 'Open Sans', 'Helvetica Neue', sans-serif;
+	font-size: 3rem;
+	border-width: 2px;
+	border-radius: 10px;
+}
+
+img {
+  text-align: center;
+  max-width: 600px;
+}
+
+#answerDiv {
+  text-align: center;
+}
+
+#questionDiv {
+  text-align: center;
+}
+
+h1, .answerchoice {
+	text-align: center;
+	color: white;
+	font-family: 'marvelFont', 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 2rem;
+  cursor: pointer;
+}
