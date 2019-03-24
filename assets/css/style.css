@@ -10,7 +10,8 @@ body {
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-attachment: fixed;
-	color: white;
+  color: white;
+  letter-spacing: 0.1rem;
 }
 
 .container-fluid {
@@ -19,7 +20,8 @@ body {
 
 .jumbotron {
 	background: rgba(0, 0, 0, 0.3);
-	margin: 0 !important;
+  margin: 0 !important;
+  letter-spacing: 0.1rem;
 }
 
 .tagline {
@@ -31,7 +33,8 @@ body {
 .btn {
 	height: 70px;
 	font-family: 'marvelFont', 'Open Sans', 'Helvetica Neue', sans-serif;
-	font-size: 3rem;
+  font-size: 3rem;
+  letter-spacing: 0.1rem;
 	border-width: 2px;
 	border-radius: 10px;
 }
@@ -54,5 +57,6 @@ h1, .answerchoice {
 	color: white;
 	font-family: 'marvelFont', 'Open Sans', 'Helvetica Neue', sans-serif;
   font-size: 2rem;
+  letter-spacing: 0.1rem;
   cursor: pointer;
 }

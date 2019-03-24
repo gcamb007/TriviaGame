@@ -3,48 +3,48 @@ $(document).ready(function () {
             question: "Who is Peter Parker’s nemesis in the first Spider-Man film?",
             choice: ["a) The Joker", "b) Magneto", "c) The Green Goblin"],
             answer: 2,
-            image: "./assets/images/01-green-goblin/03.gif",
+            image: "./assets/images/green-goblin/01.gif",
         },
         {
             question: "What is the name of the cosmic cube that Loki takes control of in The Avengers?",
             choice: ["a) the Tesseract", "b) the Magic Cube", "c) the Mjolnir"],
             answer: 0,
-            image: "./assets/images/03-tesseract/01.gif",
+            image: "./assets/images/tesseract/01.gif",
         },
         {
             question: "How many Avengers are there in the Avengers movie?",
             choice: ["a) 4", "b) 10", "c) 6"],
             answer: 2,
-            image: "./assets/images/04-avengersmovie/01.gif",
+            image: "./assets/images/avengersmovie/01.gif",
         }, {
             question: "What’s the name of Tony Stark’s company in the Iron Man trilogy?",
             choice: ["a) Stark and Sons", "b) Stark and Co", "c) Stark Industries"],
             answer: 2,
-            image: "./assets/images/05-starkindustries/01.gif",
+            image: "./assets/images/starkindustries/01.gif",
         },
         {
             question: "How many years was Captain America frozen for in Captain America: The First Avenger?",
             choice: ["a) Nearly 100 years", "b) Nearly 70 years", "c) Nearly 20 years"],
             answer: 1,
-            image: "./assets/images/06-cap/01.gif",
+            image: "./assets/images/cap/01.gif",
         },
         {
             question: "Who is Thor’s main romantic interest in Thor?",
             choice: ["a) Jane Foster", "b) Jean Grey", "c) Mary Jane"],
             answer: 0,
-            image: "./assets/images/07-thor/01.gif",
+            image: "./assets/images/thor/01.gif",
         },
         {
             question: "What is the name of Rhodey’s iron suit in Iron Man 3?",
             choice: ["a) Death Proof", "b) War Machine", "c) Killing Machine"],
             answer: 1,
-            image: "./assets/images/09-warmachine/01.gif",
+            image: "./assets/images/warmachine/01.gif",
         },
         {
             question: "What is the planet called that Thor and Loki come from?",
             choice: ["a) Titan", "b) Zenn-La", "c) Asgard"],
             answer: 2,
-            image: "./assets/images/11-asgard/01.gif",
+            image: "./assets/images/asgard/01.gif",
         }
 
     ];
