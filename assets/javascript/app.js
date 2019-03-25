@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    //options variables
     var options = [{
             question: "Who is Peter Parker’s nemesis in the first Spider-Man film?",
             choice: ["a) The Joker", "b) Magneto", "c) The Green Goblin"],
@@ -48,24 +49,33 @@ $(document).ready(function () {
         }
 
     ];
-
+    
     //global variables
-    var correctCount = 0;
-    var wrongCount = 0;
-    var unanswerCount = 0;
+    var correct = 0;
+    var wrong = 0;
+    var unanswer = 0;
     var timer = 10;
     var intervalId;
-    var userGuess = "";
+    var playerGuess = "";
     var running = false;
-    var qCount = options.length;
+    var questionCount = options.length;
     var pick;
     var index;
     var newArray = [];
-    var holder = [];
+    var spaceHolder = [];
 
-    $("#reset").hide();
+    //start game
+    $("#restart").hide();
+    $("#start").on("click", function () {
+        $("#start").hide();
+        displayQuestion();
+        runTimer();
+        for (var i = 0; i < options.length; i++) {
+            spaceHolder.push(options[i]);
+        }
+    })
 
-    //timer start
+    //timer function
     function runTimer() {
         if (!running) {
             intervalId = setInterval(decrement, 1000);
@@ -73,30 +83,31 @@ $(document).ready(function () {
         }
     }
 
-    //timer countdown
+    //countdown function
     function decrement() {
         $("#timelapse").html("<h1>Time left: " + timer + "</h1>");
         timer--;
-
+        //if timer runs out
         if (timer === 0) {
-            unanswerCount++;
+            unanswer++;
             stop();
             $("#answerDiv").html("<h1>Time is up! The correct answer is: " + pick.choice[pick.answer] + "</h1>");
-            hidepicture();
+            $("#timelapse").hide();
+            picture();
         }
     }
 
-    //timer stop
+    //stop and clear function
     function stop() {
         running = false;
         clearInterval(intervalId);
     }
 
-    //show initial random trivia question and answers
+    //show initial random trivia question and answers functions
+    //display questions function
     function displayQuestion() {
         index = Math.floor(Math.random() * options.length);
         pick = options[index];
-
         $("#questionDiv").html("<h1>" + pick.question + "</h1>");
         //trivia loop
         for (var i = 0; i < pick.choice.length; i++) {
@@ -106,32 +117,35 @@ $(document).ready(function () {
             //create new array to evaluate answer choices
             userChoice.attr("data-guessvalue", i);
             $("#answerDiv").append(userChoice);
+            $("#timelapse").show();
         }
 
         //select answer and outcomes
         $(".answerchoice").on("click", function () {
             //grab array position from userGuess
-            userGuess = parseInt($(this).attr("data-guessvalue"));
+            playerGuess = parseInt($(this).attr("data-guessvalue"));
 
-            //correct guess or wrong guess outcomes
-            if (userGuess === pick.answer) {
+            //correct or wrong guess outcomes
+            if (playerGuess === pick.answer) {
                 stop();
-                correctCount++;
-                userGuess = "";
+                correct++;
+                playerGuess = "";
                 $("#answerDiv").html("<h1>Correct!</h1>");
-                hidepicture();
-
+                $("#timelapse").hide();
+                picture();
             } else {
                 stop();
-                wrongCount++;
-                userGuess = "";
+                wrong++;
+                playerGuess = "";
                 $("#answerDiv").html("<h1>That's incorrect! The correct answer is: " + pick.choice[pick.answer] + "</h1>");
-                hidepicture();
+                $("#timelapse").hide();
+                picture();
             }
         })
     }
 
-    function hidepicture() {
+    //image function
+    function picture() {
         $("#answerDiv").append("<img src=" + pick.image + ">");
         newArray.push(pick);
         options.splice(index, 1);
@@ -140,45 +154,34 @@ $(document).ready(function () {
             $("#answerDiv").empty();
             timer = 10;
 
-            if ((wrongCount + correctCount + unanswerCount) === qCount) {
+            //show results and final score
+            if ((wrong + correct + unanswer) === questionCount) {
                 $("#questionDiv").empty();
                 $("#questionDiv").html("<h1>Game Over!  Your score: </h1>");
-                $("#answerDiv").append("<h1> Correct: " + correctCount + "</h1>");
-                $("#answerDiv").append("<h1> Incorrect: " + wrongCount + "</h1>");
-                $("#answerDiv").append("<h1> Unanswered: " + unanswerCount + "</h1>");
-                $("#reset").show();
-                correctCount = 0;
-                wrongCount = 0;
-                unanswerCount = 0;
+                $("#answerDiv").append("<h1> Correct: " + correct + "</h1>");
+                $("#answerDiv").append("<h1> Incorrect: " + wrong + "</h1>");
+                $("#answerDiv").append("<h1> Unanswered: " + unanswer + "</h1>");
+                $("#restart").show();
+                correct = 0;
+                wrong = 0;
+                unanswer = 0;
             } else {
                 runTimer();
                 displayQuestion();
             }
-
         }, 4000);
-
-
     }
 
-    $("#start").on("click", function () {
-        $("#start").hide();
-        displayQuestion();
-        runTimer();
-        for (var i = 0; i < options.length; i++) {
-            holder.push(options[i]);
-        }
-    })
-
-    $("#reset").on("click", function () {
-        $("#reset").hide();
+    //restart game
+    $("#restart").on("click", function () {
+        $("#restart").hide();
         $("#answerDiv").empty();
         $("#questionDiv").empty();
-        for (var i = 0; i < holder.length; i++) {
-            options.push(holder[i]);
+        for (var i = 0; i < spaceHolder.length; i++) {
+            options.push(spaceHolder[i]);
         }
         runTimer();
         displayQuestion();
-
     })
 
     //audio file
@@ -188,5 +191,4 @@ $(document).ready(function () {
     } else {
         $("#playAudio").remove()
     }
-
 })
