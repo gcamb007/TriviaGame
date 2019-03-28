@@ -60,3 +60,8 @@ h1, .answerchoice {
   letter-spacing: 0.1rem;
   cursor: pointer;
 }
+.answerchoice:hover {
+	color: white;
+	text-shadow: 1px 1px 10px white;
+	font-size: 3rem;
+}

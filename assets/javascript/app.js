@@ -1,6 +1,6 @@
 $(document).ready(function () {
     //options variables
-    var options = [{
+    var triviaOptions = [{
             question: "Who is Peter Parker’s nemesis in the first Spider-Man film?",
             choice: ["a) The Joker", "b) Magneto", "c) The Green Goblin"],
             answer: 2,
@@ -58,9 +58,9 @@ $(document).ready(function () {
     var intervalId;
     var playerGuess = "";
     var running = false;
-    var questionCount = options.length;
-    var pick;
-    var index;
+    var questionCount = triviaOptions.length;
+    var computerPick;
+    var initialQuestion;
     var newArray = [];
     var spaceHolder = [];
 
@@ -70,10 +70,51 @@ $(document).ready(function () {
         $("#start").hide();
         displayQuestion();
         runTimer();
-        for (var i = 0; i < options.length; i++) {
-            spaceHolder.push(options[i]);
+        for (var i = 0; i < triviaOptions.length; i++) {
+            spaceHolder.push(triviaOptions[i]);
         }
     })
+
+    //show initial random trivia question and answers functions
+    //display questions function
+    function displayQuestion() {
+        initialQuestion = Math.floor(Math.random() * triviaOptions.length);
+        computerPick = triviaOptions[initialQuestion];
+        //createRadioElement ();
+        $("#questionDiv").html("<h1>" + computerPick.question + "</h1>");
+        //trivia loop
+        for (var i = 0; i < computerPick.choice.length; i++) {
+            var userChoice = $("<div>");
+            userChoice.addClass("answerchoice");
+            userChoice.html(computerPick.choice[i]);
+            userChoice.attr("data-guessvalue", i);
+            $("#answerDiv").append(userChoice);
+            $("#timelapse").show();
+        }
+
+        //select answer and outcomes
+        $(".answerchoice").on("click", function () {
+            //grab array position from userGuess
+            playerGuess = parseInt($(this).attr("data-guessvalue"));
+
+            //correct or wrong guess outcomes
+            if (playerGuess === computerPick.answer) {
+                stop();
+                correct++;
+                playerGuess = "";
+                $("#answerDiv").html("<h1>Correct!</h1>");
+                $("#timelapse").hide();
+                picture();
+            } else {
+                stop();
+                wrong++;
+                playerGuess = "";
+                $("#answerDiv").html("<h1>That's incorrect! The correct answer is: " + computerPick.choice[computerPick.answer] + "</h1>");
+                $("#timelapse").hide();
+                picture();
+            }
+        })
+    }
 
     //timer function
     function runTimer() {
@@ -91,66 +132,25 @@ $(document).ready(function () {
         if (timer === 0) {
             unanswer++;
             stop();
-            $("#answerDiv").html("<h1>Time is up! The correct answer is: " + pick.choice[pick.answer] + "</h1>");
+            $("#answerDiv").html("<h1>Time is up! The correct answer is: " + computerPick.choice[computerPick.answer] + "</h1>");
             $("#timelapse").hide();
             picture();
         }
     }
 
-    //stop and clear function
+    //timer stop and clear function
     function stop() {
         running = false;
         clearInterval(intervalId);
     }
 
-    //show initial random trivia question and answers functions
-    //display questions function
-    function displayQuestion() {
-        index = Math.floor(Math.random() * options.length);
-        pick = options[index];
-        $("#questionDiv").html("<h1>" + pick.question + "</h1>");
-        //trivia loop
-        for (var i = 0; i < pick.choice.length; i++) {
-            var userChoice = $("<div>");
-            userChoice.addClass("answerchoice");
-            userChoice.html(pick.choice[i]);
-            //create new array to evaluate answer choices
-            userChoice.attr("data-guessvalue", i);
-            $("#answerDiv").append(userChoice);
-            $("#timelapse").show();
-        }
-
-        //select answer and outcomes
-        $(".answerchoice").on("click", function () {
-            //grab array position from userGuess
-            playerGuess = parseInt($(this).attr("data-guessvalue"));
-
-            //correct or wrong guess outcomes
-            if (playerGuess === pick.answer) {
-                stop();
-                correct++;
-                playerGuess = "";
-                $("#answerDiv").html("<h1>Correct!</h1>");
-                $("#timelapse").hide();
-                picture();
-            } else {
-                stop();
-                wrong++;
-                playerGuess = "";
-                $("#answerDiv").html("<h1>That's incorrect! The correct answer is: " + pick.choice[pick.answer] + "</h1>");
-                $("#timelapse").hide();
-                picture();
-            }
-        })
-    }
-
     //image function
     function picture() {
-        $("#answerDiv").append("<img src=" + pick.image + ">");
-        newArray.push(pick);
-        options.splice(index, 1);
+        $("#answerDiv").append("<img src=" + computerPick.image + ">");
+        newArray.push(computerPick);
+        triviaOptions.splice(initialQuestion, 1);
 
-        var hidpic = setTimeout(function () {
+        var hidepic = setTimeout(function () {
             $("#answerDiv").empty();
             timer = 10;
 
@@ -178,7 +178,7 @@ $(document).ready(function () {
         $("#answerDiv").empty();
         $("#questionDiv").empty();
         for (var i = 0; i < spaceHolder.length; i++) {
-            options.push(spaceHolder[i]);
+            triviaOptions.push(spaceHolder[i]);
         }
         runTimer();
         displayQuestion();
@@ -191,4 +191,25 @@ $(document).ready(function () {
     } else {
         $("#playAudio").remove()
     }
+
+    // function createRadioElement( name, checked ) {
+    //     var radioInput;
+    //     try {
+    //         var radioHtml = '<input type="radio" name="' + name + '"';
+    //         if ( checked ) {
+    //             radioHtml += ' checked="checked"';
+    //         }
+    //         radioHtml += '/>';
+    //         radioInput = document.createElement(radioHtml);
+    //     } catch( err ) {
+    //         radioInput = document.createElement('input');
+    //         radioInput.setAttribute('type', 'radio');
+    //         radioInput.setAttribute('name', name);
+    //         if ( checked ) {
+    //             radioInput.setAttribute('checked', 'checked');
+    //         }
+    //     }
+    
+    //     return radioInput;
+    // }
 })
