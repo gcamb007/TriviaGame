@@ -16,4 +16,3 @@ For this homewrok I used the help of a few past similar projects and code snipet
 
 7. **https://teamtreehouse.com/community/i-need-help-with-a-trivia-game-i-made-with-javascript**
 
-8. **hhttps://codereview.stackexchange.com/questions/122837/simple-javascript-quiz-application-with-radio-buttons**

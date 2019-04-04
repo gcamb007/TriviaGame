@@ -63,10 +63,10 @@ $(document).ready(function () {
     $("#restart").hide(); //This hides the 'restart' button
 
     $("#start").click(function () { //This function is the initiation function that starts the trivia game
-        $(this).hide(); //Here 'this' represents the 'start' button
+        $(this).hide(); //Here 'this' is the 'start' button
         count = setInterval(timer, 1000); //This redefines the 'count' variable value 
         displayTrivia(); //Initiate the 'displayTrivia' function
-        $(timer).show();      
+        $(timeLeft).show(); //Show the timer
     });
 
     var computerPick; //Stores the questions picked by the computer to be display
@@ -161,4 +161,4 @@ $(document).ready(function () {
 
 })
 
-// NOTE: Had to stop working on finishing this app so I could have time to work on the API homewrok. Reworking the logic I had followed before was challenging, especially understanding the scope of the code.
+// NOTE: Had to stop working on finishing this app so I could have time to work on the API homewrok. Reworking the logic I had followed before was challenging, especially understanding the scope of the code. I would like help figuring out the fix for this app so I can add it to my live portfolio site. Thanks.
