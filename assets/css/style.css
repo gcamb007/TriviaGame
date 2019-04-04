@@ -39,6 +39,15 @@ body {
 	border-radius: 10px;
 }
 
+button {
+	height: 70px;
+	font-family: 'marvelFont', 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 3rem;
+  letter-spacing: 0.1rem;
+	border-width: 2px;
+	border-radius: 10px;
+}
+
 img {
   text-align: center;
   max-width: 600px;
@@ -52,6 +61,15 @@ img {
   text-align: center;
 }
 
+#timelapse {
+	height: 70px;
+	font-family: 'marvelFont', 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 2rem;
+  letter-spacing: 0.1rem;
+	border-width: 2px;
+	border-radius: 10px;
+}
+
 h1, .answerchoice {
 	text-align: center;
 	color: white;
@@ -62,6 +80,6 @@ h1, .answerchoice {
 }
 .answerchoice:hover {
 	color: white;
-	text-shadow: 1px 1px 10px white;
+	text-shadow: 1px 1px 10px black;
 	font-size: 3rem;
 }

@@ -1,6 +1,7 @@
 $(document).ready(function () {
-    //options variables
-    var triviaOptions = [{
+
+    //Array with all the question, answer, and image options to display
+    var triviaArray = [{
             question: "Who is Peter Parker’s nemesis in the first Spider-Man film?",
             choice: ["a) The Joker", "b) Magneto", "c) The Green Goblin"],
             answer: 2,
@@ -17,7 +18,8 @@ $(document).ready(function () {
             choice: ["a) 4", "b) 10", "c) 6"],
             answer: 2,
             image: "./assets/images/avengersmovie/01.gif",
-        }, {
+        },
+        {
             question: "What’s the name of Tony Stark’s company in the Iron Man trilogy?",
             choice: ["a) Stark and Sons", "b) Stark and Co", "c) Stark Industries"],
             answer: 2,
@@ -42,174 +44,121 @@ $(document).ready(function () {
             image: "./assets/images/warmachine/01.gif",
         },
         {
-            question: "What is the planet called that Thor and Loki come from?",
+            question: "What is the planet that Thor and Loki come from called?",
             choice: ["a) Titan", "b) Zenn-La", "c) Asgard"],
             answer: 2,
             image: "./assets/images/asgard/01.gif",
         }
 
     ];
-    
-    //global variables
-    var correct = 0;
-    var wrong = 0;
-    var unanswer = 0;
-    var timer = 10;
-    var intervalId;
-    var playerGuess = "";
-    var running = false;
-    var questionCount = triviaOptions.length;
-    var computerPick;
-    var initialQuestion;
-    var newArray = [];
-    var spaceHolder = [];
 
-    //start game
-    $("#restart").hide();
-    $("#start").on("click", function () {
-        $("#start").hide();
-        displayQuestion();
-        runTimer();
-        for (var i = 0; i < triviaOptions.length; i++) {
-            spaceHolder.push(triviaOptions[i]);
-        }
-    })
+    var playerGuess = ""; //Holds the player's input by clicking an answer
+    var correct = 0; //Holds correct input guesses by player
+    var incorrect = 0; //Holds incorrect input guesses by player 
+    var unanswer = 0; //Holds unaswered questions 
+    var image; //Holds the image to be display
+    var count; //Time counter use for the decrement of the timer
+    var timeLeft = 5; //Holds seconds player has to answer one question
 
-    //show initial random trivia question and answers functions
-    //display questions function
-    function displayQuestion() {
-        initialQuestion = Math.floor(Math.random() * triviaOptions.length);
-        computerPick = triviaOptions[initialQuestion];
-        //createRadioElement ();
-        $("#questionDiv").html("<h1>" + computerPick.question + "</h1>");
-        //trivia loop
-        for (var i = 0; i < computerPick.choice.length; i++) {
-            var userChoice = $("<div>");
+    $("#restart").hide(); //This hides the 'restart' button
+
+    $("#start").click(function () { //This function is the initiation function that starts the trivia game
+        $(this).hide(); //Here 'this' represents the 'start' button
+        count = setInterval(timer, 1000); //This redefines the 'count' variable value 
+        displayTrivia(); //Initiate the 'displayTrivia' function
+        $(timer).show();      
+    });
+
+    var computerPick; //Stores the questions picked by the computer to be display
+
+    function displayTrivia() { //Displays the trivia questions
+        initialQuestion = Math.floor(Math.random() * triviaArray.length); 
+        computerPick = triviaArray[initialQuestion]; //Computer picks random question from the 'triviaArraya'
+        $("#questionDiv").html("<h1>" + computerPick.question + "</h1>"); //Pushes computerPick to the 'questionDiv' in the HTML
+        for (var i = 0; i < computerPick.question.length; i++) { //Loops the answers for each trivia question
+            var userChoice = $("<div>"); //Pushes the answer choices to the 'answerDiv' in the HTML
             userChoice.addClass("answerchoice");
             userChoice.html(computerPick.choice[i]);
-            userChoice.attr("data-guessvalue", i);
+            userChoice.attr("data-id", i);
             $("#answerDiv").append(userChoice);
             $("#timelapse").show();
         }
+    };
 
-        //select answer and outcomes
-        $(".answerchoice").on("click", function () {
-            //grab array position from userGuess
-            playerGuess = parseInt($(this).attr("data-guessvalue"));
-
-            //correct or wrong guess outcomes
-            if (playerGuess === computerPick.answer) {
-                stop();
-                correct++;
-                playerGuess = "";
-                $("#answerDiv").html("<h1>Correct!</h1>");
-                $("#timelapse").hide();
-                picture();
-            } else {
-                stop();
-                wrong++;
-                playerGuess = "";
-                $("#answerDiv").html("<h1>That's incorrect! The correct answer is: " + computerPick.choice[computerPick.answer] + "</h1>");
-                $("#timelapse").hide();
-                picture();
-            }
-        })
-    }
-
-    //timer function
-    function runTimer() {
-        if (!running) {
-            intervalId = setInterval(decrement, 1000);
-            running = true;
+    function timer() { //Timer function to run the timer for each question
+        timeLeft--; //Dicreases the timer
+        if (timeLeft === 0) {
+            clearInterval(count); //Clears the count value
         }
-    }
+        $("#timelapse").html("Time left: " + timeLeft);
+    };
 
-    //countdown function
-    function decrement() {
-        $("#timelapse").html("<h1>Time left: " + timer + "</h1>");
-        timer--;
-        //if timer runs out
-        if (timer === 0) {
-            unanswer++;
-            stop();
+    $(document).on("click", "div", function () { //Function use to determine the game outcomes and push them into the 'answerPick' div
+        playerGuess = $(this).data("id");
+        //console.log (playerGuess);
+        triviaArray[0].answer;
+
+        if (playerGuess !== triviaArray[0].answer) { //Incorrect player guess code
+            $("#answerDiv").text("That's incorrect! The correct answer is: " + computerPick.choice[computerPick.answer]);
+            incorrect++;
+            playerGuess = "";
+            $("#timelapse").hide();
+            picture();
+
+        } else if (playerGuess === triviaArray[0].answer) { //Correct player guess code
+            $("#answerDiv").text("Correct!");
+            correct++;
+            playerGuess = "";
+            $("#timelapse").hide();
+            picture();
+
+        } else { //No answer and timer runout code
             $("#answerDiv").html("<h1>Time is up! The correct answer is: " + computerPick.choice[computerPick.answer] + "</h1>");
+            stop();
+            unanswer++;
+            playerGuess = "";
             $("#timelapse").hide();
             picture();
         }
-    }
+    });
 
-    //timer stop and clear function
-    function stop() {
-        running = false;
-        clearInterval(intervalId);
-    }
+    var newArray = []; //New array that holds the player's final scores - all game answers
 
-    //image function
-    function picture() {
+    function picture() { //This function shows a specific image after the 'answerDiv' is filled
         $("#answerDiv").append("<img src=" + computerPick.image + ">");
         newArray.push(computerPick);
-        triviaOptions.splice(initialQuestion, 1);
+        triviaArray.splice(initialQuestion);
 
-        var hidepic = setTimeout(function () {
+        var hideImage = setTimeout(function () {
             $("#answerDiv").empty();
-            timer = 10;
-
-            //show results and final score
-            if ((wrong + correct + unanswer) === questionCount) {
-                $("#questionDiv").empty();
-                $("#questionDiv").html("<h1>Game Over!  Your score: </h1>");
-                $("#answerDiv").append("<h1> Correct: " + correct + "</h1>");
-                $("#answerDiv").append("<h1> Incorrect: " + wrong + "</h1>");
-                $("#answerDiv").append("<h1> Unanswered: " + unanswer + "</h1>");
-                $("#restart").show();
-                correct = 0;
-                wrong = 0;
-                unanswer = 0;
-            } else {
-                runTimer();
-                displayQuestion();
-            }
+            timeLeft = 5;
         }, 4000);
-    }
+    };
 
-    //restart game
-    $("#restart").on("click", function () {
-        $("#restart").hide();
-        $("#answerDiv").empty();
-        $("#questionDiv").empty();
-        for (var i = 0; i < spaceHolder.length; i++) {
-            triviaOptions.push(spaceHolder[i]);
-        }
-        runTimer();
-        displayQuestion();
-    })
+    //This code is use to display the final score at the end of the game, not working, I need to fix this!
 
-    //audio file
+    // if ((incorrect + correct + unanswer) === triviaArray.choice.length) {
+    //     $("#questionDiv").empty();
+    //     $("#questionDiv").html("<h1>Game Over!  Your score: </h1>");
+    //     $("#answerDiv").append("<h1> Correct: " + correct + "</h1>");
+    //     $("#answerDiv").append("<h1> Incorrect: " + incorrect + "</h1>");
+    //     $("#answerDiv").append("<h1> Unanswered: " + unanswer + "</h1>");
+    //     $("#restart").show();
+    //     correct = 0;
+    //     incorrect = 0;
+    //     unanswer = 0;
+    // } else {
+    //     displayTrivia();
+    // };
+
+    //Audio file - code from a Google search use to make sure audio plays in Chrome
     var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
     if (!isChrome) {
         $("#iframeAudio").remove()
     } else {
         $("#playAudio").remove()
-    }
+    };
 
-    // function createRadioElement( name, checked ) {
-    //     var radioInput;
-    //     try {
-    //         var radioHtml = '<input type="radio" name="' + name + '"';
-    //         if ( checked ) {
-    //             radioHtml += ' checked="checked"';
-    //         }
-    //         radioHtml += '/>';
-    //         radioInput = document.createElement(radioHtml);
-    //     } catch( err ) {
-    //         radioInput = document.createElement('input');
-    //         radioInput.setAttribute('type', 'radio');
-    //         radioInput.setAttribute('name', name);
-    //         if ( checked ) {
-    //             radioInput.setAttribute('checked', 'checked');
-    //         }
-    //     }
-    
-    //     return radioInput;
-    // }
 })
+
+// NOTE: Had to stop working on finishing this app so I could have time to work on the API homewrok. Reworking the logic I had followed before was challenging, especially understanding the scope of the code.
